@@ -6,8 +6,8 @@ export function ContactList({deleteContact, contacts}) {
     return <List>
         {contacts().map((contact) => {
             return <ListItem
-                key={contact.id} d
-                ata-id={contact.id}>
+                key={contact.id}
+                data-id={contact.id}>
                 <ContactItem
                     contact={contact}
                     deleteContact={deleteContact}
