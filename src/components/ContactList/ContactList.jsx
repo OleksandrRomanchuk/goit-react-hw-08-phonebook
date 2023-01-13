@@ -1,28 +1,22 @@
 import PropTypes from 'prop-types';
-import { TiUserDeleteOutline } from 'react-icons/ti';
-import { List, ListItem, ContactWrapper, ContactName, PhoneNumber, DeleteBtn } from './ContactList.styled';
+import { ContactItem } from 'components/ContactItem/ContactItem';
+import { List, ListItem} from './ContactList.styled';
 
 export function ContactList({deleteContact, contacts}) {
     return <List>
-        {contacts().map(({ id, name, number }) => {
-            return <ListItem key={id} data-id={id}>
-                <ContactWrapper>
-                    <ContactName>{ name }</ContactName>
-                    <PhoneNumber>{number}</PhoneNumber>
-                </ContactWrapper>
-                
-                <DeleteBtn
-                    type="button"
-                    onClick={deleteContact}
-                    title="Delete contact"
-                    ><TiUserDeleteOutline/>
-                </DeleteBtn>
-                    </ListItem>
-                })}
-            </List>;
+        {contacts().map((contact) => {
+            return <ListItem
+                key={contact.id} d
+                ata-id={contact.id}>
+                <ContactItem
+                    contact={contact}
+                    deleteContact={deleteContact}
+                    aria-label="Delete contact" />
+            </ListItem>
+        })}
+    </List>;
 };
 
 ContactList.propTypes = {
-    deleteContact: PropTypes.func.isRequired,
     contacts: PropTypes.func.isRequired,
 }
