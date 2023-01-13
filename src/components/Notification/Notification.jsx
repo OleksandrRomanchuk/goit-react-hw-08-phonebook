@@ -3,8 +3,8 @@ import { NotifyMessage } from './Notification.styled';
 
 export function Notification({message}) {
     return <NotifyMessage>
-                {message}
-            </NotifyMessage>;
+        {message}
+    </NotifyMessage>;
 };
 
 Notification.propTypes = {

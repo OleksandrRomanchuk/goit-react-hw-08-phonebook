@@ -3,9 +3,9 @@ import { AppSection, SectionTitle } from './Section.styled';
 
 export function Section({title, children}) {
     return <AppSection>
-                <SectionTitle>{title}</SectionTitle>
-                {children}
-            </AppSection>;
+        <SectionTitle>{title}</SectionTitle>
+        {children}
+    </AppSection>;
 };
 
 Section.propTypes = {

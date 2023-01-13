@@ -83,8 +83,8 @@ class App extends Component {
           <Title>Phonebook</Title>
           <Wrapper>
             <Section title="Form to add contacts">
-            <ContactForm
-              onSubmit={this.addNewContact} />
+              <ContactForm
+                onSubmit={this.addNewContact} />
             </Section>
             
             <Section title="Contacts">
@@ -92,9 +92,9 @@ class App extends Component {
                 ? <Notification
                   message="There are no contacts" />
                 : <><Filter
-                onChange={this.setFilterWord}/><ContactList
-                  contacts={this.filteredContacts}
-                  deleteContact={this.deleteContact} /></>}
+                  onChange={this.setFilterWord} /><ContactList
+                    contacts={this.filteredContacts}
+                    deleteContact={this.deleteContact} /></>}
             </Section>
           </Wrapper>
         </Container>
