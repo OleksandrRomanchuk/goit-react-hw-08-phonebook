@@ -1,11 +1,10 @@
 import PropTypes from 'prop-types';
+import { TiUserAddOutline } from 'react-icons/ti';
 import { Form, Label, Input, SubmitBtn } from './ContactForm.styled';
 
-export function ContactForm(props) {
-    const { onSubmit } = props;
-
+export function ContactForm({onSubmit}) {
         return <Form onSubmit={onSubmit}>
-            <Label htmlFor="">
+            <Label>
                 Name
                 <Input
                     type="text"
@@ -15,7 +14,7 @@ export function ContactForm(props) {
                     required
             /></Label>
             
-            <Label htmlFor="">
+            <Label>
                 Number
                 <Input
                     type="tel"
@@ -25,7 +24,12 @@ export function ContactForm(props) {
                     required
             /></Label>
             
-            <SubmitBtn type="submit">Add contact</SubmitBtn>
+            <SubmitBtn
+                type="submit">
+                <TiUserAddOutline
+                    style={{fontSize: 14,}}/>
+                Add contact
+            </SubmitBtn>
         </Form>
 };
 
