@@ -19,8 +19,10 @@ export function ContactItem({contact: {name, number}, deleteContact, ...allyProp
     </>;
 };
 
-// ContactItem.propTypes = {
-//     name: PropTypes.string.isRequired,
-//     number: PropTypes.string.isRequired,
-//     deleteContact: PropTypes.func.isRequired,
-// }
+ContactItem.propTypes = {
+    contact: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        number: PropTypes.string.isRequired,
+    }),
+    deleteContact: PropTypes.func.isRequired,
+}
