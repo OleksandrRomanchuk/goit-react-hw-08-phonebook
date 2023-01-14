@@ -1,9 +1,37 @@
 import PropTypes from 'prop-types';
+import { Component } from 'react';
 import { TiUserAddOutline } from 'react-icons/ti';
 import { Form, Label, Input, SubmitBtn } from './ContactForm.styled';
 
-export function ContactForm({ getNewContactData }) {
-    return <Form onSubmit={(e) => getNewContactData(onFormSubmit(e))}>
+class ContactForm extends Component {
+    onFormSubmit = (event) => {
+        event.preventDefault();
+
+        const form = event.target;
+        const newContact = [...form.elements].reduce((acc, elem) => {
+            if (elem.name) {
+                acc = { ...acc, [elem.name]: elem.value }; 
+            };
+
+            return acc;
+        }, {});
+
+        if (this.checkNewContact(newContact.name)) {
+            alert(`${newContact.name} is already in contacts.`);
+            return;
+        };
+
+        this.props.getNewContactData(newContact);
+
+        form.reset();
+    };
+
+    checkNewContact = (newName) => {
+        return this.props.contactsList.some(({ name }) => name === newName);
+    }
+
+    render() {
+        return <Form onSubmit={this.onFormSubmit}>
         <Label>
             Name
             <Input
@@ -31,26 +59,16 @@ export function ContactForm({ getNewContactData }) {
             Add contact
         </SubmitBtn>
     </Form>;
+    }
 };
 
+export { ContactForm };
+
 ContactForm.propTypes = {
+    contactsList: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        number: PropTypes.string.isRequired,
+    })),
     getNewContactData: PropTypes.func.isRequired,
-}
-
-function onFormSubmit(event) {
-    event.preventDefault();
-
-    const form = event.target;
-
-    const newContact = [...form.elements].reduce((acc, elem) => {
-      if (elem.name) {
-        acc = {...acc, [elem.name]: elem.value,}
-      }
-
-      return acc;
-    }, {});
-
-    form.reset();
-    
-    return newContact;
 }
