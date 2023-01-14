@@ -18,11 +18,6 @@ class App extends Component {
   };
 
   addNewContact = (newContact) => {
-    if (this.checkNewContact(newContact.name)) {
-      alert(`${newContact.name} is already in contacts.`);
-      return;
-    }
-
     this.setState(prevState => {
       return {contacts: [{id: nanoid(), ...newContact}, ...this.state.contacts]}
     });
@@ -45,13 +40,10 @@ class App extends Component {
 
     return this.state.contacts.filter(({name}) => name.toLowerCase().includes(normalizeFilterWord))
   }
-
-  checkNewContact = (newName) => {
-    return this.state.contacts.some(({ name }) => name === newName);
-  }
   
   render() {
-    const contacsCount = this.state.contacts.length;
+    const contacts = this.state.contacts;
+    const contacsCount = contacts.length;
 
     return (
       <PhonebookApp>
@@ -60,6 +52,7 @@ class App extends Component {
           <Wrapper>
             <Section title="Form to add contacts">
               <ContactForm
+                contactsList={contacts}
                 getNewContactData={this.addNewContact} />
             </Section>
             
