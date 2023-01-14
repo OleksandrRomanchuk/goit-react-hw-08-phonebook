@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { nanoid } from 'nanoid';
+import { nanoid } from "nanoid";
 
 //========== components ==========
 import { Section } from "components/Section/Section";
@@ -13,46 +13,35 @@ import { PhonebookApp, Container, Title, Wrapper } from './App.styled';
 
 class App extends Component {
   state = {
-    contacts: [],
+    contacts: [
+    {id: 'id-1', name: 'Rosie Simpson', number: '459-12-56'},
+    {id: 'id-2', name: 'Hermione Kline', number: '443-89-12'},
+    {id: 'id-3', name: 'Eden Clements', number: '645-17-79'},
+    {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'},
+  ],
     filter: '',
   };
 
-  addNewContact = (event) => {
-    event.preventDefault();
-
-    const form = event.target;
-
-    const newContact = [...form.elements].reduce((acc, elem) => {
-      if (elem.name) {
-        acc = {...acc, [elem.name]: elem.value,}
-      }
-
-      return acc;
-    }, {id: nanoid()});
-
+  addNewContact = (newContact) => {
     if (this.checkNewContact(newContact.name)) {
       alert(`${newContact.name} is already in contacts.`);
       return;
     }
 
     this.setState(prevState => {
-      return {...prevState, contacts: [newContact, ...this.state.contacts]}
+      return {contacts: [{id: nanoid(), ...newContact}, ...this.state.contacts]}
     });
-
-    this.resetForm(form);
   }
 
-  deleteContact = (event) => {
-    const contactId = event.target.closest('[data-id]').dataset.id;
-    
+  deleteContact = (dataId) => {
     this.setState((prevState) => {
-      return {...prevState, contacts: prevState.contacts.filter(contact => contact.id !== contactId)}
+      return {contacts: prevState.contacts.filter(contact => contact.id !== dataId)}
     });
   }
 
   setFilterWord = (event) => {
     this.setState(prevState => {
-      return {...prevState, filter: event.target.value.trim()}
+      return {filter: event.target.value.trim()}
     });
   }
 
@@ -60,14 +49,6 @@ class App extends Component {
     const normalizeFilterWord = this.state.filter.toLowerCase();
 
     return this.state.contacts.filter(({name}) => name.toLowerCase().includes(normalizeFilterWord))
-  }
-
-  resetForm = (form) => {
-    [...form.elements].forEach(elem => {
-      if (elem.name) {
-        elem.value = '';
-      }
-    });
   }
 
   checkNewContact = (newName) => {
@@ -84,17 +65,20 @@ class App extends Component {
           <Wrapper>
             <Section title="Form to add contacts">
               <ContactForm
-                onSubmit={this.addNewContact} />
+                getNewContactData={this.addNewContact} />
             </Section>
             
             <Section title="Contacts">
               {!contacsCount
                 ? <Notification
                   message="There are no contacts" />
-                : <><Filter
-                  onChange={this.setFilterWord} /><ContactList
-                    contacts={this.filteredContacts}
-                    deleteContact={this.deleteContact} /></>}
+                : <>
+                  <Filter
+                    onChange={this.setFilterWord} />
+                  <ContactList
+                    contacts={this.filteredContacts()}
+                    deleteContact={this.deleteContact} />
+                </>}
             </Section>
           </Wrapper>
         </Container>

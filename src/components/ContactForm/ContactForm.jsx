@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import { TiUserAddOutline } from 'react-icons/ti';
 import { Form, Label, Input, SubmitBtn } from './ContactForm.styled';
 
-export function ContactForm({onSubmit}) {
-    return <Form onSubmit={onSubmit}>
+export function ContactForm({ getNewContactData }) {
+    return <Form onSubmit={(e) => getNewContactData(onFormSubmit(e))}>
         <Label>
             Name
             <Input
@@ -34,5 +34,23 @@ export function ContactForm({onSubmit}) {
 };
 
 ContactForm.propTypes = {
-    onSubmit: PropTypes.func,
+    getNewContactData: PropTypes.func.isRequired,
+}
+
+function onFormSubmit(event) {
+    event.preventDefault();
+
+    const form = event.target;
+
+    const newContact = [...form.elements].reduce((acc, elem) => {
+      if (elem.name) {
+        acc = {...acc, [elem.name]: elem.value,}
+      }
+
+      return acc;
+    }, {});
+
+    form.reset();
+    
+    return newContact;
 }

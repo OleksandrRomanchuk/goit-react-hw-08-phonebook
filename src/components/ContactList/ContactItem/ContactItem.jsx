@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { TiUserDeleteOutline } from 'react-icons/ti';
 import {ContactWrapper, ContactName, PhoneNumber, DeleteBtn} from './ContactItem.styled'
 
-export function ContactItem({contact: {name, number}, deleteContact, ...allyProps}) {
+export function ContactItem({contact: {name, number}, deleteContact, dataId, ...allyProps}) {
     return <>
         <ContactWrapper>
             <ContactName>{name}</ContactName>
@@ -11,7 +11,7 @@ export function ContactItem({contact: {name, number}, deleteContact, ...allyProp
                 
         <DeleteBtn
             type="button"
-            onClick={deleteContact}
+            onClick={() => deleteContact(dataId)}
             title="Delete contact"
             {...allyProps}
         ><TiUserDeleteOutline />
@@ -25,4 +25,5 @@ ContactItem.propTypes = {
         number: PropTypes.string.isRequired,
     }),
     deleteContact: PropTypes.func.isRequired,
+    dataId: PropTypes.string.isRequired,
 }
