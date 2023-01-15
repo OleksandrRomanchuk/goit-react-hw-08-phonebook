@@ -10,6 +10,8 @@ export const AppSection = styled.section`
 export const SectionTitle = styled.h2`
     position: relative;
 
+    font-size: 20px;
+
     ::after {
         content: '';
         position: absolute;

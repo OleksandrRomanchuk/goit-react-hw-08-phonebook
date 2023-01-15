@@ -4,6 +4,15 @@ import { TiUserAddOutline } from 'react-icons/ti';
 import { Form, Label, Input, SubmitBtn } from './ContactForm.styled';
 
 class ContactForm extends Component {
+    static propTypes = {
+        contactsList: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        number: PropTypes.string.isRequired,
+    })),
+        getNewContactData: PropTypes.func.isRequired,
+    };
+
     onFormSubmit = (event) => {
         event.preventDefault();
 
@@ -63,12 +72,3 @@ class ContactForm extends Component {
 };
 
 export { ContactForm };
-
-ContactForm.propTypes = {
-    contactsList: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        number: PropTypes.string.isRequired,
-    })),
-    getNewContactData: PropTypes.func.isRequired,
-}

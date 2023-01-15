@@ -18,7 +18,8 @@ export const Label = styled.label`
 `;
 
 export const Input = styled.input`
-    min-width: 135px;
+    min-width: 150px;
+    max-width: 150px;
 
     padding: 2px 3px;
 

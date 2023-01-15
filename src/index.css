@@ -1,4 +1,4 @@
-@import-normalize; /* bring in normalize.css styles */
+@import-normalize;
 
 * {
   margin: 0;
@@ -12,10 +12,11 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
+  font-size: 12px;
+  color: #ffffff;
 
   background-color: #100d1f;
-
-  color: #ffffff;
 }
 
 code {
