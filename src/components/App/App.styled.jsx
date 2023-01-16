@@ -31,13 +31,17 @@ export const Title = styled.h1`
     text-decoration: underline;
 
     writing-mode: vertical-lr;
-    color: transparent;
-    -webkit-text-stroke-width: 1px;
-    -webkit-text-stroke-color: #ffffff;
+    color: #ffffff;
     text-shadow: 0 0 10px #FFF, 0 0 20px #cd18ff, 0 0 30px #cd18ff, 0 0 55px #cd18ff, 0 0 75px #cd18ff, 2px 2px 2px rgba(206,89,55,0);
 
     z-index: 1;
     transform: rotate(180deg);
+
+    @media screen and (min-width: 480px) {
+        color: transparent;
+        -webkit-text-stroke-width: 1px;
+        -webkit-text-stroke-color: #ffffff;
+    }
 
     ::after, ::before {
         content: '';
