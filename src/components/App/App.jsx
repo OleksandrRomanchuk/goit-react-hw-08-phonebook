@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { nanoid } from "nanoid";
+import { saveDataToLocalSt, loadDataFromLocalSt } from "helpers/localStfunc";
 
 //========== components ==========
 import { Section } from "components/Section/Section";
@@ -15,31 +16,49 @@ class App extends Component {
   state = {
     contacts: [],
     filter: '',
+    LS_KEY: 'contacts',
+  };
+
+  componentDidMount() { 
+    const { LS_KEY } = this.state;
+    const savedContacts = loadDataFromLocalSt(LS_KEY);
+
+    if (savedContacts) {
+      this.setState({contacts: savedContacts})
+    }
+  };
+
+  componentDidUpdate(_, prevState) { 
+    const { contacts, LS_KEY } = this.state;
+
+    if (prevState.contacts !== this.state.contacts) {
+      saveDataToLocalSt(LS_KEY, contacts);
+    }
   };
 
   addNewContact = (newContact) => {
     this.setState(prevState => {
-      return {contacts: [{id: nanoid(), ...newContact}, ...this.state.contacts]}
+      return { contacts: [{ id: nanoid(), ...newContact }, ...this.state.contacts] }
     });
-  }
+  };
 
   deleteContact = (dataId) => {
     this.setState((prevState) => {
-      return {contacts: prevState.contacts.filter(contact => contact.id !== dataId)}
+      return { contacts: prevState.contacts.filter(contact => contact.id !== dataId) }
     });
-  }
+  };
 
   setFilterWord = (event) => {
     this.setState(prevState => {
-      return {filter: event.target.value.trim()}
+      return { filter: event.target.value.trim() }
     });
-  }
+  };
 
   filteredContacts = () => {
     const normalizeFilterWord = this.state.filter.toLowerCase();
 
-    return this.state.contacts.filter(({name}) => name.toLowerCase().includes(normalizeFilterWord))
-  }
+    return this.state.contacts.filter(({ name }) => name.toLowerCase().includes(normalizeFilterWord))
+  };
   
   render() {
     const contacts = this.state.contacts;
