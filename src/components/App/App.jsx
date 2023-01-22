@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { useState, useEffect } from "react";
 import { nanoid } from "nanoid";
 import { saveDataToLocalSt, loadDataFromLocalSt } from "helpers/localStfunc";
 
@@ -12,59 +12,37 @@ import { ContactList } from "components/ContactList/ContactList";
 //========== styles ==========
 import { PhonebookApp, Container, Title, Wrapper } from './App.styled';
 
-class App extends Component {
-  state = {
-    contacts: [],
-    filter: '',
-    LS_KEY: 'contacts',
+const LS_KEY = 'contacts';
+
+export function App() {
+  const [contacts, setContacts] = useState(() => loadDataFromLocalSt(LS_KEY) ?? []);
+  const [filter, setFilter] = useState('');
+
+  useEffect(() => {
+    saveDataToLocalSt(LS_KEY, contacts);
+  }, [contacts]);
+
+  const addNewContact = (newContact) => {
+    newContact.id = nanoid();
+
+    setContacts(state => [newContact, ...state]);
   };
 
-  componentDidMount() { 
-    const { LS_KEY } = this.state;
-    const savedContacts = loadDataFromLocalSt(LS_KEY);
-
-    if (savedContacts) {
-      this.setState({contacts: savedContacts})
-    }
+  const deleteContact = (dataId) => {
+    setContacts(contacts.filter(contact => contact.id !== dataId));
   };
 
-  componentDidUpdate(_, prevState) { 
-    const { contacts, LS_KEY } = this.state;
-
-    if (prevState.contacts !== this.state.contacts) {
-      saveDataToLocalSt(LS_KEY, contacts);
-    }
+  const setFilterWord = (event) => {
+    setFilter(event.target.value.trim());
   };
 
-  addNewContact = (newContact) => {
-    this.setState(prevState => {
-      return { contacts: [{ id: nanoid(), ...newContact }, ...this.state.contacts] }
-    });
+  const filteredContacts = () => {
+    const normalizeFilterWord = filter.toLowerCase();
+
+    return contacts.filter(({ name }) => name.toLowerCase().includes(normalizeFilterWord))
   };
 
-  deleteContact = (dataId) => {
-    this.setState((prevState) => {
-      return { contacts: prevState.contacts.filter(contact => contact.id !== dataId) }
-    });
-  };
-
-  setFilterWord = (event) => {
-    this.setState(prevState => {
-      return { filter: event.target.value.trim() }
-    });
-  };
-
-  filteredContacts = () => {
-    const normalizeFilterWord = this.state.filter.toLowerCase();
-
-    return this.state.contacts.filter(({ name }) => name.toLowerCase().includes(normalizeFilterWord))
-  };
-  
-  render() {
-    const contacts = this.state.contacts;
-    const contacsCount = contacts.length;
-
-    return (
+  return (
       <PhonebookApp>
         <Container>
           <Title>Phonebook</Title>
@@ -72,26 +50,24 @@ class App extends Component {
             <Section title="Form to add contacts">
               <ContactForm
                 contactsList={contacts}
-                getNewContactData={this.addNewContact} />
+                getNewContactData={addNewContact} />
             </Section>
             
             <Section title="Contacts">
-              {!contacsCount
+              {!contacts.length
                 ? <Notification
                   message="There are no contacts" />
                 : <>
                   <Filter
-                    onChange={this.setFilterWord} />
+                    onChange={setFilterWord} />
                   <ContactList
-                    contacts={this.filteredContacts()}
-                    deleteContact={this.deleteContact} />
+                    contacts={filteredContacts()}
+                    deleteContact={deleteContact} />
                 </>}
             </Section>
           </Wrapper>
         </Container>
       </PhonebookApp>
     );
-  };
-};
+}
 
-export { App };

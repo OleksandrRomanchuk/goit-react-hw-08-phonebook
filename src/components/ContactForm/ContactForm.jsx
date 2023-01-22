@@ -1,19 +1,9 @@
 import PropTypes from 'prop-types';
-import { Component } from 'react';
 import { TiUserAddOutline } from 'react-icons/ti';
 import { Form, Label, Input, SubmitBtn } from './ContactForm.styled';
 
-class ContactForm extends Component {
-    static propTypes = {
-        contactsList: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        number: PropTypes.string.isRequired,
-    })),
-        getNewContactData: PropTypes.func.isRequired,
-    };
-
-    onFormSubmit = (event) => {
+export function ContactForm({contactsList, getNewContactData}) {
+    const onFormSubmit = (event) => {
         event.preventDefault();
 
         const form = event.target;
@@ -25,22 +15,21 @@ class ContactForm extends Component {
             return acc;
         }, {});
 
-        if (this.checkNewContact(newContact.name)) {
+        if (checkNewContact(newContact.name)) {
             alert(`${newContact.name} is already in contacts.`);
             return;
         };
 
-        this.props.getNewContactData(newContact);
+        getNewContactData(newContact);
 
         form.reset();
     };
 
-    checkNewContact = (newName) => {
-        return this.props.contactsList.some(({ name }) => name === newName);
-    }
+    const checkNewContact = (newName) => {
+        return contactsList.some(({ name }) => name === newName);
+    };
 
-    render() {
-        return <Form onSubmit={this.onFormSubmit}>
+        return <Form onSubmit={onFormSubmit}>
             <Label>
                 Name
                 <Input
@@ -68,7 +57,13 @@ class ContactForm extends Component {
                 Add contact
             </SubmitBtn>
         </Form>;
-    }
 };
 
-export { ContactForm };
+ContactForm.propTypes = {
+        contactsList: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        number: PropTypes.string.isRequired,
+    })),
+        getNewContactData: PropTypes.func.isRequired,
+    };
