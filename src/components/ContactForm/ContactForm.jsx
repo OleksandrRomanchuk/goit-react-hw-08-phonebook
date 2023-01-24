@@ -15,18 +15,9 @@ export function ContactForm({contactsList, getNewContactData}) {
             return acc;
         }, {});
 
-        if (checkNewContact(newContact.name)) {
-            alert(`${newContact.name} is already in contacts.`);
-            return;
-        };
+        const result = getNewContactData(newContact);
 
-        getNewContactData(newContact);
-
-        form.reset();
-    };
-
-    const checkNewContact = (newName) => {
-        return contactsList.some(({ name }) => name === newName);
+        if (!result) form.reset();
     };
 
         return <Form onSubmit={onFormSubmit}>
@@ -60,10 +51,5 @@ export function ContactForm({contactsList, getNewContactData}) {
 };
 
 ContactForm.propTypes = {
-        contactsList: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        number: PropTypes.string.isRequired,
-    })),
         getNewContactData: PropTypes.func.isRequired,
     };

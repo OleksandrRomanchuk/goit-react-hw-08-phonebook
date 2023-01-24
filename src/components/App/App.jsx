@@ -23,6 +23,11 @@ export function App() {
   }, [contacts]);
 
   const addNewContact = (newContact) => {
+    if (checkNewContact(newContact.name)) {
+      alert(`${newContact.name} is already in contacts.`);
+      return true;
+    }
+
     newContact.id = nanoid();
 
     setContacts(state => [newContact, ...state]);
@@ -42,6 +47,10 @@ export function App() {
     return contacts.filter(({ name }) => name.toLowerCase().includes(normalizeFilterWord))
   };
 
+  const checkNewContact = (newName) => {
+        return contacts.some(({ name }) => name === newName);
+    };
+
   return (
       <PhonebookApp>
         <Container>
@@ -49,7 +58,6 @@ export function App() {
           <Wrapper>
             <Section title="Form to add contacts">
               <ContactForm
-                contactsList={contacts}
                 getNewContactData={addNewContact} />
             </Section>
             
