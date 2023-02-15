@@ -1,9 +1,15 @@
 //========== helpers ==========
-import PropTypes from 'prop-types';
 import { initValues } from 'initials/initFormValues';
 
-//========== hooks ==========
+//========== form libraries ==========
 import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
+//========== selectors ==========
+import { getContacts } from 'redux/selectors';
+
+//========== actions ==========
+import { addContact } from 'redux/actions';
 
 //========== components ==========
 import { TiUserAddOutline } from 'react-icons/ti';
@@ -11,8 +17,10 @@ import { TiUserAddOutline } from 'react-icons/ti';
 //========== styles ==========
 import { Form, Label, Input, SubmitBtn } from './ContactForm.styled';
 
-export function ContactForm({ getNewContactData }) {
+export const ContactForm = () => {
 	const [state, setState] = useState({ ...initValues });
+	const contacts = useSelector(getContacts);
+	const dispatch = useDispatch();
 
 	const handleInputChange = ({ target: { name, value } }) => {
 		setState(prevState => ({ ...prevState, [name]: value }));
@@ -21,9 +29,12 @@ export function ContactForm({ getNewContactData }) {
 	const onFormSubmit = event => {
 		event.preventDefault();
 
-		const result = getNewContactData(state);
+		const result = contacts.some(({ name }) => name === state.name);
 
-		if (!result) setState({ ...initValues });
+		if (!result) {
+			dispatch(addContact(state));
+			setState({ ...initValues });
+		}
 	};
 
 	const { name, number } = state;
@@ -61,8 +72,4 @@ export function ContactForm({ getNewContactData }) {
 			</SubmitBtn>
 		</Form>
 	);
-}
-
-ContactForm.propTypes = {
-	getNewContactData: PropTypes.func.isRequired,
 };
