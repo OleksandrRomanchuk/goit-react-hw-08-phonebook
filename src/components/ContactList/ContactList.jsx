@@ -1,5 +1,8 @@
-//========== helpers ==========
-import PropTypes from 'prop-types';
+//========== from libraries ==========
+import { useSelector } from 'react-redux';
+
+//========== selectors ==========
+import { getContacts, getFilter } from 'redux/selectors';
 
 //========== components ==========
 import { ContactItem } from 'components/ContactList/ContactItem/ContactItem';
@@ -7,31 +10,21 @@ import { ContactItem } from 'components/ContactList/ContactItem/ContactItem';
 //========== styles ==========
 import { List, ListItem } from './ContactList.styled';
 
-export function ContactList({ deleteContact, contacts }) {
-	return (
-		<List>
-			{contacts.map(contact => {
-				return (
-					<ListItem key={contact.id}>
-						<ContactItem
-							contact={contact}
-							deleteContact={deleteContact}
-							dataId={contact.id}
-							aria-label="Delete contact"
-						/>
-					</ListItem>
-				);
-			})}
-		</List>
+export const ContactList = () => {
+	const contacts = useSelector(getContacts);
+	const filter = useSelector(getFilter);
+	const filterNormalize = filter.toLowerCase();
+	const filteredContacts = contacts.filter(({ name }) =>
+		name.toLowerCase().includes(filterNormalize)
 	);
-}
 
-ContactList.propTypes = {
-	contacts: PropTypes.arrayOf(
-		PropTypes.shape({
-			id: PropTypes.string.isRequired,
-			name: PropTypes.string.isRequired,
-			number: PropTypes.string.isRequired,
-		})
-	),
+	const listItems = filteredContacts.map(contact => {
+		return (
+			<ListItem key={contact.id}>
+				<ContactItem contact={contact} aria-label="Delete contact" />
+			</ListItem>
+		);
+	});
+
+	return <List>{listItems}</List>;
 };
