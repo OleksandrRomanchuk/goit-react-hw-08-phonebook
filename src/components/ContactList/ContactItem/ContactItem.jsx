@@ -5,7 +5,8 @@ import { useDispatch } from 'react-redux';
 //========== components ==========
 import { TiUserDeleteOutline } from 'react-icons/ti';
 
-import { delContact } from 'redux/actions';
+//========== actions ==========
+import { deleteContact } from 'redux/contactsSlice';
 
 //========== styles ==========
 import {
@@ -16,20 +17,20 @@ import {
 } from './ContactItem.styled';
 
 export const ContactItem = ({
-	contact: { name, number, id },
+	contact: { contactName, contactPhoneNumber, id },
 	...allyProps
 }) => {
 	const dispatch = useDispatch();
-	
+
 	return (
 		<>
 			<ContactWrapper>
-				<ContactName>{name}</ContactName>
-				<PhoneNumber>{number}</PhoneNumber>
+				<ContactName>{contactName}</ContactName>
+				<PhoneNumber>{contactPhoneNumber}</PhoneNumber>
 			</ContactWrapper>
 			<DeleteBtn
 				type="button"
-				onClick={() => dispatch(delContact(id))}
+				onClick={() => dispatch(deleteContact(id))}
 				title="Delete contact"
 				{...allyProps}
 			>
@@ -41,7 +42,7 @@ export const ContactItem = ({
 
 ContactItem.propTypes = {
 	contact: PropTypes.shape({
-		name: PropTypes.string.isRequired,
-		number: PropTypes.string.isRequired,
+		contactName: PropTypes.string.isRequired,
+		contactPhoneNumber: PropTypes.string.isRequired,
 	}),
 };
