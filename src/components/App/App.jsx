@@ -1,40 +1,44 @@
+import { Routes, Route } from 'react-router-dom';
+import SharedLayout from 'components/SharedLayout/SharedLayout';
+import ContactsPage from 'pages/ContactsPage/ContactsPage';
+import ContactsGroupPage from 'pages/ContactsGroupPage/ContactsGroupPage';
 import { useSelector } from 'react-redux';
 import { getContacts } from 'redux/selectors';
+import { getContactPropertyValues } from 'helpers/getContactPropertyValues';
+import { pathNameNormalize } from 'helpers/pathNameNormalize';
+import GroupContactList from 'components/GroupContactList/GroupContactList';
 
-//========== components ==========
-import { Section } from 'components/Section/Section';
-import { ContactForm } from 'components/ContactForm/ContactForm';
-import { Filter } from 'components/Filter/Filter';
-import { Notification } from 'components/Notification/Notification';
-import { ContactList } from 'components/ContactList/ContactList';
+export const App = () => {
+	const myGroups = getContactPropertyValues(
+		useSelector,
+		getContacts,
+		'contactsGroup'
+	);
 
-//========== styles ==========
-import { PhonebookApp, Container, Title, Wrapper } from './App.styled';
-
-export function App() {
-	const contacts = useSelector(getContacts);
+	const myGroupsRoutes = myGroups.map(groupName => {
+		const normalizedGroupName = pathNameNormalize(groupName);
+		return (
+			<Route
+				key={groupName}
+				path={
+					normalizedGroupName === '---'
+						? 'contacts-without-group'
+						: normalizedGroupName
+				}
+				element={<GroupContactList group={groupName} />}
+			/>
+		);
+	});
 
 	return (
-		<PhonebookApp>
-			<Container>
-				<Title>Phonebook</Title>
-				<Wrapper>
-					<Section title="Form to add contacts">
-						<ContactForm />
-					</Section>
-
-					<Section title="Contacts">
-						{!contacts.length ? (
-							<Notification message="There are no contacts" />
-						) : (
-							<>
-								<Filter />
-								<ContactList />
-							</>
-						)}
-					</Section>
-				</Wrapper>
-			</Container>
-		</PhonebookApp>
+		<Routes>
+			<Route path="/" element={<SharedLayout />}>
+				<Route index element={<ContactsPage />} />
+				<Route path="my-groups" element={<ContactsGroupPage />}>
+					{myGroupsRoutes}
+				</Route>
+				<Route path="*" element={<ContactsPage />} />
+			</Route>
+		</Routes>
 	);
-}
+};
