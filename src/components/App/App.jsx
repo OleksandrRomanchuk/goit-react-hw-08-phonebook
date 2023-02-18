@@ -1,6 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
 import SharedLayout from 'components/SharedLayout/SharedLayout';
+import HomePage from 'pages/HomePage/HomePage';
 import ContactsPage from 'pages/ContactsPage/ContactsPage';
+import ContactsSubPage from 'pages/ContactsSubPage/ContactsSubPage';
 import ContactsGroupPage from 'pages/ContactsGroupPage/ContactsGroupPage';
 import { useSelector } from 'react-redux';
 import { getContacts } from 'redux/selectors';
@@ -26,17 +28,23 @@ export const App = () => {
 						: normalizedGroupName
 				}
 				element={<GroupContactList group={groupName} />}
-			/>
+			>
+				<Route path=":id" element={<ContactsSubPage />} />
+			</Route>
 		);
 	});
 
 	return (
 		<Routes>
 			<Route path="/" element={<SharedLayout />}>
-				<Route index element={<ContactsPage />} />
+				<Route index element={<HomePage />} />
+				<Route path="my-contacts" element={<ContactsPage />}>
+					<Route path=":id" element={<ContactsSubPage />} />
+				</Route>
 				<Route path="my-groups" element={<ContactsGroupPage />}>
 					{myGroupsRoutes}
 				</Route>
+				<Route path="my-groups/:id/details" element={<ContactsSubPage />} />
 				<Route path="*" element={<ContactsPage />} />
 			</Route>
 		</Routes>

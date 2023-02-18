@@ -1,16 +1,16 @@
-import { NavLink } from 'react-router-dom';
+import { List, PageLink } from './AppNavigation.styled';
 
 const AppNavigation = () => {
 	return (
 		<nav>
-			<ul>
+			<List>
 				<li>
-					<NavLink to="/">My contacts</NavLink>
+					<PageLink to="/my-contacts">My contacts</PageLink>
 				</li>
 				<li>
-					<NavLink to="/my-groups">My groups</NavLink>
+					<PageLink to="/my-groups">My groups</PageLink>
 				</li>
-			</ul>
+			</List>
 		</nav>
 	);
 };

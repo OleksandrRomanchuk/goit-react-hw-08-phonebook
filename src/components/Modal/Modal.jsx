@@ -1,9 +1,11 @@
 import { createPortal } from 'react-dom';
 import { useEffect } from 'react';
 
+import { Backdrop, ModalWindow, Title } from './Modal.styled';
+
 const modalContainer = document.getElementById('modalRoot');
 
-const Modal = ({ toggleModal, children }) => {
+const Modal = ({ toggleModal, title, children }) => {
 	useEffect(() => {
 		const onKeyDown = event => {
 			if (event.code === 'Escape') {
@@ -24,9 +26,12 @@ const Modal = ({ toggleModal, children }) => {
 		}
 	};
 	return createPortal(
-		<div onClick={onModalOpen}>
-			<div>{children}</div>
-		</div>,
+		<Backdrop onClick={onModalOpen}>
+			<ModalWindow>
+				<Title>{title}</Title>
+				{children}
+			</ModalWindow>
+		</Backdrop>,
 		modalContainer
 	);
 };

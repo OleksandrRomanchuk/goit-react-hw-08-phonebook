@@ -1,21 +1,15 @@
 import { useSelector } from 'react-redux';
 import { getContacts } from 'redux/selectors';
-import { useState } from 'react';
-
+import { Suspense } from 'react';
+import { Outlet } from 'react-router-dom';
 import { Section } from 'components/Section/Section';
 import { Filter } from 'components/Filter/Filter';
 import { ContactList } from 'components/ContactList/ContactList';
 import { Notification } from 'components/Notification/Notification';
 
 const ContactsPage = () => {
-	const [contactDetailInfo, setContactDetailInfo] = useState(null);
 	const contacts = useSelector(getContacts);
 	const areContacts = Boolean(contacts.length);
-
-	const contactItemClickHandler = itemId => {
-		const chosenContactInfo = contacts.find(({ id }) => id === itemId);
-		setContactDetailInfo(chosenContactInfo);
-	};
 
 	return (
 		<Section title="Contacts">
@@ -24,17 +18,14 @@ const ContactsPage = () => {
 				{areContacts && (
 					<>
 						<Filter />
-						<ContactList chooseContact={contactItemClickHandler} />
+						<ContactList />
 					</>
 				)}
 			</div>
 			<div>
-				{contactDetailInfo && (
-					<>
-						<p>{contactDetailInfo.contactName}</p>
-						<p>{contactDetailInfo.contactPhoneNumber}</p>
-					</>
-				)}
+				<Suspense>
+					<Outlet />
+				</Suspense>
 			</div>
 		</Section>
 	);

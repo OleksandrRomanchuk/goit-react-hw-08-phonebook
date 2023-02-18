@@ -1,12 +1,15 @@
+import Container from 'components/Container/Container';
 import AppNavigation from 'components/AppNavigation/AppNavigation';
-import { Link } from 'react-router-dom';
+import { NavBar, Logo } from './Header.styled';
 
 const Header = () => {
 	return (
-		<header>
-			<Link to="/">Phonebook</Link>
-			<AppNavigation />
-		</header>
+		<NavBar>
+			<Container layout="flex">
+				<Logo to="/">Phonebook</Logo>
+				<AppNavigation />
+			</Container>
+		</NavBar>
 	);
 };
 
