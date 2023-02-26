@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { getContacts } from 'redux/selectors';
 import { Link, useLocation } from 'react-router-dom';
@@ -18,7 +19,11 @@ const GroupContactList = ({ group }) => {
 			<li key={id}>
 				<p>{contactName}</p>
 				<p>{contactPhoneNumber}</p>
-				<Link to={id} state={{ from: location }} title="Show more details">
+				<Link
+					to={`/my-contacts/${id}/details`}
+					state={{ from: location }}
+					title="Show more details"
+				>
 					Show details
 				</Link>
 			</li>
@@ -26,6 +31,10 @@ const GroupContactList = ({ group }) => {
 	);
 
 	return <ul>{elements}</ul>;
+};
+
+GroupContactList.propTypes = {
+	group: PropTypes.string.isRequired,
 };
 
 export default GroupContactList;
