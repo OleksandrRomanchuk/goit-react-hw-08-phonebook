@@ -10,9 +10,25 @@ const ContactsSubPage = () => {
 
 	return (
 		<div>
-			<p>{chosenContactInfo.contactName}</p>
-			<p>{chosenContactInfo.contactPhoneNumber}</p>
-			<p>{chosenContactInfo.contactsGroup}</p>
+			{chosenContactInfo && (
+				<>
+					<p>
+						<span>Name: </span>
+						{chosenContactInfo.contactName}
+					</p>
+					<p>
+						<span>Phone number: </span>
+						{chosenContactInfo.contactPhoneNumber}
+					</p>
+					<p>
+						<span>
+							{chosenContactInfo.contactsGroup === '---'
+								? 'this contact is not tied to any of the groups.'
+								: `In "${chosenContactInfo.contactsGroup}" group.`}
+						</span>
+					</p>
+				</>
+			)}
 		</div>
 	);
 };
