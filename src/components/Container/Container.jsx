@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-
 import { Wrapper, FlexWrapper } from './Container.styled';
 
 const Container = ({ layout, children }) => {
