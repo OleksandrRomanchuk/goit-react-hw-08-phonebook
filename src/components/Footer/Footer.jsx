@@ -1,5 +1,4 @@
 import Container from 'components/Container/Container';
-
 import { FooterSection, Text } from './Footer.styled';
 
 const Footer = () => {
