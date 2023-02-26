@@ -1,16 +1,24 @@
+import { lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import SharedLayout from 'components/SharedLayout/SharedLayout';
-import HomePage from 'pages/HomePage/HomePage';
-import ContactsPage from 'pages/ContactsPage/ContactsPage';
-import ContactsSubPage from 'pages/ContactsSubPage/ContactsSubPage';
-import ContactsGroupPage from 'pages/ContactsGroupPage/ContactsGroupPage';
 import { useSelector } from 'react-redux';
 import { getContacts } from 'redux/selectors';
 import { getContactPropertyValues } from 'helpers/getContactPropertyValues';
 import { pathNameNormalize } from 'helpers/pathNameNormalize';
-import GroupContactList from 'components/GroupContactList/GroupContactList';
 
-export const App = () => {
+import SharedLayout from 'components/SharedLayout/SharedLayout';
+const HomePage = lazy(() => import('pages/HomePage/HomePage'));
+const ContactsPage = lazy(() => import('pages/ContactsPage/ContactsPage'));
+const ContactsSubPage = lazy(() =>
+	import('pages/ContactsSubPage/ContactsSubPage')
+);
+const ContactsGroupPage = lazy(() =>
+	import('pages/ContactsGroupPage/ContactsGroupPage')
+);
+const GroupContactList = lazy(() =>
+	import('components/GroupContactList/GroupContactList')
+);
+
+const App = () => {
 	const myGroups = getContactPropertyValues(
 		useSelector,
 		getContacts,
@@ -44,9 +52,11 @@ export const App = () => {
 				<Route path="my-groups" element={<ContactsGroupPage />}>
 					{myGroupsRoutes}
 				</Route>
-				<Route path="my-groups/:id/details" element={<ContactsSubPage />} />
+				<Route path="/my-contacts/:id/details" element={<ContactsSubPage />} />
 				<Route path="*" element={<ContactsPage />} />
 			</Route>
 		</Routes>
 	);
 };
+
+export default App;
