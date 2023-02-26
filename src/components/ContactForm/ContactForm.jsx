@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { initialAddContactFormValues } from 'initials/initialAddContactFormValues';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -10,11 +11,9 @@ import {
 	localStorageFormValuesKey,
 } from 'helpers/localStfunc';
 import { getContactPropertyValues } from 'helpers/getContactPropertyValues';
-
-//========== styles ==========
 import { Form, Label, Input, SubmitBtn } from './ContactForm.styled';
 
-export const ContactForm = ({ toggleModal }) => {
+const ContactForm = ({ toggleModal }) => {
 	const [formValues, setFormValues] = useState(
 		() =>
 			loadDataFromLocalSt(localStorageFormValuesKey) ?? initialAddContactFormValues
@@ -119,3 +118,9 @@ export const ContactForm = ({ toggleModal }) => {
 		</Form>
 	);
 };
+
+ContactForm.propTypes = {
+	toggleModal: PropTypes.func.isRequired,
+};
+
+export default ContactForm;
