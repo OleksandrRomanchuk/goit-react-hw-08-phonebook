@@ -1,10 +1,9 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Input = styled.input`
-    padding: 2px 3px;
-    margin-top: 16px;
+	padding: 2px 3px;
 
-    border: none;
-    border-radius: 2px;
-    outline: none;
+	border: none;
+	border-radius: 2px;
+	outline: none;
 `;
