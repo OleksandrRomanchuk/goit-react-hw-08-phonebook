@@ -10,6 +10,8 @@ export const NavBar = styled.header`
 	background-color: #ffffff;
 
 	border-bottom: 1px solid black;
+
+	z-index: 1;
 `;
 
 export const Logo = styled(Link)`
