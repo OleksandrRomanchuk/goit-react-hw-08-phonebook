@@ -8,6 +8,8 @@ export const Backdrop = styled.div`
 	right: 0;
 
 	background-color: #8080808b;
+
+	z-index: 2;
 `;
 
 export const ModalWindow = styled.div`
