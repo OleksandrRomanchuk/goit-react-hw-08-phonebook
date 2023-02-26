@@ -20,10 +20,10 @@ const contactsSlice = createSlice({
 			},
 
 			prepare(contact) {
-				contact.id = nanoid(8);
+				// contact.id = nanoid(8);
 
 				return {
-					payload: contact,
+					payload: { ...contact, id: nanoid(8) },
 				};
 			},
 		},
