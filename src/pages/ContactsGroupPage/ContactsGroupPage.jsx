@@ -1,4 +1,4 @@
-import { Section } from 'components/Section/Section';
+import Section from 'components/Section/Section';
 import { useSelector } from 'react-redux';
 import { getContacts } from 'redux/selectors';
 import { Suspense } from 'react';
@@ -6,6 +6,10 @@ import { Outlet } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import { getContactPropertyValues } from 'helpers/getContactPropertyValues';
 import { pathNameNormalize } from 'helpers/pathNameNormalize';
+import {
+	LeftContainer,
+	RigthContainer,
+} from 'pages/ContactsPage/ContactsPage.styled';
 
 const ContactsGroupPage = () => {
 	const myGroups = getContactPropertyValues(
@@ -32,15 +36,15 @@ const ContactsGroupPage = () => {
 	});
 
 	return (
-		<Section title="Your groups">
-			<div>
+		<Section>
+			<LeftContainer>
 				<ul>{elements}</ul>
-			</div>
-			<div>
+			</LeftContainer>
+			<RigthContainer>
 				<Suspense>
 					<Outlet />
 				</Suspense>
-			</div>
+			</RigthContainer>
 		</Section>
 	);
 };
