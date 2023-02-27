@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
-import { getContacts } from 'redux/selectors';
+import { selectContacts } from 'redux/selectors';
 import { useParams } from 'react-router-dom';
 
 const ContactsSubPage = () => {
-	const contacts = useSelector(getContacts);
+	const contacts = useSelector(selectContacts);
 	const { id: itemId } = useParams();
 
 	const chosenContactInfo = contacts.find(({ id }) => id === itemId);

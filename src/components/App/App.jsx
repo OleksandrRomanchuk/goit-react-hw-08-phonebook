@@ -1,7 +1,7 @@
 import { lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { getContacts } from 'redux/selectors';
+import { selectContacts } from 'redux/selectors';
 import { getContactPropertyValues } from 'helpers/getContactPropertyValues';
 import { pathNameNormalize } from 'helpers/pathNameNormalize';
 
@@ -21,7 +21,7 @@ const GroupContactList = lazy(() =>
 const App = () => {
 	const myGroups = getContactPropertyValues(
 		useSelector,
-		getContacts,
+		selectContacts,
 		'contactsGroup'
 	);
 

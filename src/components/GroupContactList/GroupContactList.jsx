@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import { getContacts } from 'redux/selectors';
+import { selectContacts } from 'redux/selectors';
 import { Link, useLocation } from 'react-router-dom';
 
 const GroupContactList = ({ group }) => {
-	const contacts = useSelector(getContacts);
+	const contacts = useSelector(selectContacts);
 	const location = useLocation();
 	const filteredContactsByGroup = contacts.filter(contact => {
 		if (contact.contactsGroup !== group) {

@@ -1,6 +1,6 @@
 import Section from 'components/Section/Section';
 import { useSelector } from 'react-redux';
-import { getContacts } from 'redux/selectors';
+import { selectContacts } from 'redux/selectors';
 import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
@@ -14,7 +14,7 @@ import {
 const ContactsGroupPage = () => {
 	const myGroups = getContactPropertyValues(
 		useSelector,
-		getContacts,
+		selectContacts,
 		'contactsGroup'
 	);
 

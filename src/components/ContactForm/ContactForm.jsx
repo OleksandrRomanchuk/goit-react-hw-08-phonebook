@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { initialAddContactFormValues } from 'initials/initialAddContactFormValues';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getContacts } from 'redux/selectors';
+import { selectContacts } from 'redux/selectors';
 import { addContact } from 'redux/contactsSlice';
 import { TiUserAddOutline } from 'react-icons/ti';
 import {
@@ -18,11 +18,11 @@ const ContactForm = ({ toggleModal }) => {
 		() =>
 			loadDataFromLocalSt(localStorageFormValuesKey) ?? initialAddContactFormValues
 	);
-	const contacts = useSelector(getContacts);
+	const contacts = useSelector(selectContacts);
 	const dispatch = useDispatch();
 	const myGroups = getContactPropertyValues(
 		useSelector,
-		getContacts,
+		selectContacts,
 		'contactsGroup'
 	);
 

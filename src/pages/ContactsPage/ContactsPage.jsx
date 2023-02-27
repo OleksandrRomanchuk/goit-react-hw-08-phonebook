@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { getContacts } from 'redux/selectors';
+import { selectContacts } from 'redux/selectors';
 import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 import Section from 'components/Section/Section';
@@ -9,7 +9,7 @@ import Notification from 'components/Notification/Notification';
 import { LeftContainer, RigthContainer } from './ContactsPage.styled';
 
 const ContactsPage = () => {
-	const contacts = useSelector(getContacts);
+	const contacts = useSelector(selectContacts);
 	const areContacts = Boolean(contacts.length);
 
 	return (
