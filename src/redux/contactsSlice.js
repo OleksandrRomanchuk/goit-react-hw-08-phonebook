@@ -7,7 +7,6 @@ import { contactsInitialState } from 'initials/contactsInitialState';
 const persistConfig = {
 	key: 'contacts',
 	storage,
-	blacklist: ['persist/PERSIST'],
 };
 
 const contactsSlice = createSlice({
