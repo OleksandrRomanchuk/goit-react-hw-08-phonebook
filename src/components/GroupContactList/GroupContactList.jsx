@@ -26,7 +26,6 @@ import {
 
 const GroupContactList = ({ group }) => {
 	const { items, isLoading } = useSelector(selectContacts);
-	console.log('isLoading: ', isLoading);
 	const dispatch = useDispatch();
 	const location = useLocation();
 	const filteredContactsByGroup =
