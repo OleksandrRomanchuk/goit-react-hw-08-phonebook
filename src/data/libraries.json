@@ -6,7 +6,6 @@
     {"name": "Styled Components", "gitHubURL": "https://github.com/styled-components/styled-components"},
     {"name": "Prop Types", "gitHubURL": "https://github.com/facebook/prop-types"},
     {"name": "axios", "gitHubURL": "https://github.com/axios/axios"},
-    {"name": "nanoid", "gitHubURL": "https://github.com/ai/nanoid"},
     {"name": "react-icons", "gitHubURL": "https://github.com/react-icons/react-icons"},
     {"name": "react-loader-spinner", "gitHubURL": "https://github.com/mhnpd/react-loader-spinner"}
 ]
