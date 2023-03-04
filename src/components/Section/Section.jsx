@@ -1,17 +1,22 @@
 import PropTypes from 'prop-types';
-import { AppSection, SectionTitle } from './Section.styled';
+import Container from 'components/Container/Container';
+import { AppSection, AddButton } from './Section.styled';
 
-const Section = ({ title, children }) => {
+const Section = ({ toggleModal, children }) => {
 	return (
 		<AppSection>
-			<SectionTitle>{title}</SectionTitle>
-			{children}
+			<Container layout="flex">
+				<AddButton type="button" onClick={toggleModal} title="Add new contact">
+					+
+				</AddButton>
+				{children}
+			</Container>
 		</AppSection>
 	);
 };
 
 Section.propTypes = {
-	title: PropTypes.string,
+	toggleModal: PropTypes.func.isRequired,
 	children: PropTypes.node.isRequired,
 };
 
