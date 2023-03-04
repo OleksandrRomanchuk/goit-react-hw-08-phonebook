@@ -11,7 +11,13 @@ const Loader = () => {
 				ariaLabel="blocks-loading"
 				wrapperStyle={{}}
 				wrapperClass="blocks-wrapper"
-				colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+				colors={[
+					'rgba(250, 0, 46, 1)',
+					'rgba(232, 121, 17, 1)',
+					'rgba(241, 178, 17, 1)',
+					'rgba(42, 153, 159, 1)',
+					'rgba(24, 107, 184, 1)',
+				]}
 			/>
 		</LoaderBackdrop>
 	);
