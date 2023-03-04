@@ -9,6 +9,8 @@ export const LeftContainer = styled.div`
 	width: 40%;
 	max-height: calc(100vh - 140px);
 	min-height: calc(100vh - 140px);
+
+	border-radius: 10px;
 `;
 
 export const RigthContainer = styled.div`
