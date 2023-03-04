@@ -25,4 +25,10 @@ export const FlexWrapper = styled(Wrapper)`
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
+	gap: 20px;
+`;
+
+export const FlexColumnWrapper = styled(FlexWrapper)`
+	flex-direction: column;
+	justify-content: center;
 `;

@@ -1,9 +1,13 @@
 import PropTypes from 'prop-types';
-import { Wrapper, FlexWrapper } from './Container.styled';
+import { Wrapper, FlexWrapper, FlexColumnWrapper } from './Container.styled';
 
 const Container = ({ layout, children }) => {
 	if (layout === 'flex') {
 		return <FlexWrapper>{children}</FlexWrapper>;
+	}
+
+	if (layout === 'flexColumn') {
+		return <FlexColumnWrapper>{children}</FlexColumnWrapper>;
 	}
 
 	return <Wrapper display={layout}>{children}</Wrapper>;
