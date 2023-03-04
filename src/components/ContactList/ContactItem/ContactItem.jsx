@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { TiUserDeleteOutline } from 'react-icons/ti';
 import { CgDetailsMore } from 'react-icons/cg';
-// import { BiEditAlt } from 'react-icons/bi';
-import { deleteContact } from 'redux/contactsSlice';
+import { BiEditAlt } from 'react-icons/bi';
+import { deleteContact } from 'redux/operations';
 import {
 	ContactWrapper,
 	ContactName,
@@ -12,43 +12,40 @@ import {
 	BtnList,
 	DeleteBtn,
 	DetailBtn,
-	// EditBtn,
+	EditBtn,
 } from './ContactItem.styled';
 
-const ContactItem = ({
-	contact: { contactName, contactPhoneNumber, id },
-	...allyProps
-}) => {
-	const location = useLocation();
+const ContactItem = ({ contact: { name, phoneNumber, id } }) => {
 	const dispatch = useDispatch();
+	const location = useLocation();
 
 	return (
 		<>
-			<ContactName>{contactName}</ContactName>
 			<ContactWrapper>
-				<PhoneNumber>{contactPhoneNumber}</PhoneNumber>
+				<ContactName>{name}</ContactName>
+				<PhoneNumber>{phoneNumber}</PhoneNumber>
+			</ContactWrapper>
+			<ContactWrapper>
 				<BtnList>
-					{/* <li>
-						<EditBtn
-							type="button"
-							onClick={() => dispatch(deleteContact(id))}
-							title="Delete contact"
-							{...allyProps}
-						>
-							<BiEditAlt />
-						</EditBtn>
-					</li> */}
 					<li>
 						<DetailBtn to={id} state={{ from: location }} title="Show more details">
 							<CgDetailsMore />
 						</DetailBtn>
 					</li>
 					<li>
+						<EditBtn
+							to={`edit/${id}`}
+							state={{ from: location }}
+							title="Edit contact"
+						>
+							<BiEditAlt />
+						</EditBtn>
+					</li>
+					<li>
 						<DeleteBtn
 							type="button"
 							onClick={() => dispatch(deleteContact(id))}
 							title="Delete contact"
-							{...allyProps}
 						>
 							<TiUserDeleteOutline />
 						</DeleteBtn>
@@ -61,8 +58,8 @@ const ContactItem = ({
 
 ContactItem.propTypes = {
 	contact: PropTypes.shape({
-		contactName: PropTypes.string.isRequired,
-		contactPhoneNumber: PropTypes.string.isRequired,
+		name: PropTypes.string.isRequired,
+		phoneNumber: PropTypes.string.isRequired,
 		id: PropTypes.string.isRequired,
 	}),
 };

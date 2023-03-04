@@ -4,16 +4,19 @@ import { Link } from 'react-router-dom';
 export const ContactWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
-	gap: 10px;
+	gap: 5px;
 `;
 
 export const ContactName = styled.p`
 	font-size: 14px;
+	font-weight: 600;
 `;
 
 export const PhoneNumber = styled.p`
+	padding-left: 35px;
+
 	font-size: 12px;
-	text-align: right;
+	color: rgba(158, 158, 158, 1);
 `;
 
 export const BtnList = styled.ul`
@@ -36,6 +39,7 @@ export const DeleteBtn = styled.button`
 	border-radius: 50%;
 	border: none;
 	outline: none;
+	cursor: pointer;
 
 	opacity: 0.4;
 
@@ -47,8 +51,8 @@ export const DeleteBtn = styled.button`
 		color: #ffffff;
 
 		opacity: 1;
-		background-color: #ff4500;
-		box-shadow: 0px 0px 5px 2px #ff4500;
+		background-color: rgba(250, 0, 46, 1);
+		box-shadow: 0px 0px 5px 2px rgba(250, 0, 46, 1);
 	}
 `;
 
@@ -61,7 +65,9 @@ export const DetailBtn = styled(Link)`
 	height: 20px;
 
 	font-size: 14px;
+	color: #000000;
 
+	background-color: #f0f0f0;
 	border-radius: 50%;
 	border: none;
 	outline: none;
@@ -76,15 +82,15 @@ export const DetailBtn = styled(Link)`
 		color: #ffffff;
 
 		opacity: 1;
-		background-color: blue;
-		box-shadow: 0px 0px 5px 2px blue;
+		background-color: rgba(24, 107, 184, 1);
+		box-shadow: 0px 0px 5px 2px rgba(24, 107, 184, 1);
 	}
 `;
 
-export const EditBtn = styled(DeleteBtn)`
+export const EditBtn = styled(DetailBtn)`
 	:hover,
 	:focus {
-		background-color: green;
-		box-shadow: 0px 0px 5px 2px green;
+		background-color: rgba(241, 178, 17, 1);
+		box-shadow: 0px 0px 5px 2px rgba(241, 178, 17, 1);
 	}
 `;
