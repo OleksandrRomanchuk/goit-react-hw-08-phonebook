@@ -1,15 +1,12 @@
-import { lazy } from 'react';
-import Container from 'components/Container/Container';
 import Header from 'components/Header/Header';
-import Loader from 'components/Loader/Loader';
+import Section from 'components/Section/Section';
 import Footer from 'components/Footer/Footer';
 import ContactForm from 'components/ContactForm/ContactForm';
+import Modal from 'components/Modal/Modal';
 import { Suspense } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { useState } from 'react';
-import { Body, Main, AddButton } from './SharedLayout.styled';
-
-const Modal = lazy(() => import('components/Modal/Modal'));
+import { Body, Main, HomePageMain } from './SharedLayout.styled';
 
 const SharedLayout = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,13 +20,11 @@ const SharedLayout = () => {
 	if (onHomePage) {
 		return (
 			<Body>
-				<Main>
-					<Container>
-						<Suspense fallback={<Loader />}>
-							<Outlet />
-						</Suspense>
-					</Container>
-				</Main>
+				<HomePageMain>
+					<Suspense>
+						<Outlet />
+					</Suspense>
+				</HomePageMain>
 			</Body>
 		);
 	}
@@ -38,16 +33,16 @@ const SharedLayout = () => {
 		<Body>
 			<Header />
 			<Main>
-				<Container>
-					<AddButton type="button" onClick={toggleModal}>
-						+
-					</AddButton>
-					<Suspense fallback={<Loader />}>
+				<Section toggleModal={toggleModal}>
+					<Suspense>
 						<Outlet />
 					</Suspense>
-				</Container>
+				</Section>
 				{isModalOpen && (
-					<Modal toggleModal={toggleModal} title="Form to add contact">
+					<Modal
+						toggleModal={toggleModal}
+						title="Here you can add a new contact to your phone book."
+					>
 						<ContactForm toggleModal={toggleModal} />
 					</Modal>
 				)}
