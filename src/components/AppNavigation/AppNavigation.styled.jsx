@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
+export const AppNav = styled.nav`
+	${({ ongroupsPage }) => ongroupsPage && 'margin-left: 434px'}
+`;
+
 export const List = styled.ul`
 	display: flex;
 	gap: 20px;
@@ -15,10 +19,10 @@ export const PageLink = styled(NavLink)`
 
 	:hover,
 	:focus {
-		color: orangered;
+		color: rgba(241, 178, 17, 1);
 	}
 
 	&.active {
-		color: orangered;
+		color: rgba(42, 153, 159, 1);
 	}
 `;
