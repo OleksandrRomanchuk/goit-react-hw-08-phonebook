@@ -2,117 +2,198 @@ import PropTypes from 'prop-types';
 import { initialAddContactFormValues } from 'initials/initialAddContactFormValues';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectContacts } from 'redux/selectors';
-import { addContact } from 'redux/contactsSlice';
+import { selectGroups } from 'redux/selectors';
+import { addContact } from 'redux/operations';
 import { TiUserAddOutline } from 'react-icons/ti';
 import {
 	loadDataFromLocalSt,
 	saveDataToLocalSt,
 	localStorageFormValuesKey,
 } from 'helpers/localStfunc';
-import { getContactPropertyValues } from 'helpers/getContactPropertyValues';
-import { Form, Label, Input, SubmitBtn } from './ContactForm.styled';
+
+import {
+	Form,
+	PositioningWrapperMain,
+	PositioningGruopWrapper,
+	Label,
+	GroupLabel,
+	GroupInput,
+	Input,
+	GroupSelect,
+	GroupSpan,
+	SubmitBtn,
+} from './ContactForm.styled';
 
 const ContactForm = ({ toggleModal }) => {
 	const [formValues, setFormValues] = useState(
 		() =>
 			loadDataFromLocalSt(localStorageFormValuesKey) ?? initialAddContactFormValues
 	);
-	const contacts = useSelector(selectContacts);
 	const dispatch = useDispatch();
-	const myGroups = getContactPropertyValues(
-		useSelector,
-		selectContacts,
-		'contactsGroup'
-	);
+	const myGroups = useSelector(selectGroups);
 
 	useEffect(() => {
 		saveDataToLocalSt(localStorageFormValuesKey, formValues);
 	}, [formValues]);
 
 	const handleInputChange = ({ target: { name, value } }) => {
-		if (name === 'contactsGroupList') {
-			return (
-				!formValues['contactsGroup'] &&
-				setFormValues(prevState => ({ ...prevState, contactsGroup: value }))
-			);
-		}
+		switch (name) {
+			case 'contactsGroupList':
+				return (
+					formValues['group'] !== '---' &&
+					setFormValues(prevState => ({ ...prevState, group: value }))
+				);
+			case 'linkedin':
+				return setFormValues(prevState => ({
+					...prevState,
+					socialLinks: { ...prevState.socialLinks, [name]: value },
+				}));
+			case 'facebook':
+				return setFormValues(prevState => ({
+					...prevState,
+					socialLinks: { ...prevState.socialLinks, [name]: value },
+				}));
+			case 'telegram':
+				return setFormValues(prevState => ({
+					...prevState,
+					socialLinks: { ...prevState.socialLinks, [name]: value },
+				}));
 
-		setFormValues(prevState => ({ ...prevState, [name]: value }));
+			default:
+				return setFormValues(prevState => ({ ...prevState, [name]: value }));
+		}
 	};
 
-	const onFormSubmit = event => {
-		event.preventDefault();
+	const onFormSubmit = async event => {
+		try {
+			event.preventDefault();
 
-		const result = contacts.some(
-			({ contactName }) => contactName === formValues.contactName
-		);
+			const newContact = { ...formValues };
 
-		if (!result) {
-			toggleModal();
-			dispatch(addContact(formValues));
-			saveDataToLocalSt(localStorageFormValuesKey, initialAddContactFormValues);
-		} else {
-			alert('Contact with such names is already in your phone book.');
+			if (!newContact.group) newContact.group = '---';
+
+			const { payload } = await dispatch(addContact(newContact));
+
+			if (payload) {
+				toggleModal();
+				saveDataToLocalSt(localStorageFormValuesKey, initialAddContactFormValues);
+			} else {
+				alert('Contact with such names is already in your phone book.');
+			}
+		} catch (error) {
+			console.log(error);
 		}
 	};
 
-	const { contactName, contactPhoneNumber, contactsGroup } = formValues;
+	const {
+		name,
+		phoneNumber,
+		group,
+		email,
+		socialLinks: { linkedin = '', facebook = '', telegram = '' },
+	} = formValues;
 
 	return (
 		<Form onSubmit={onFormSubmit}>
-			<Label>
-				Name
-				<Input
-					onChange={handleInputChange}
-					type="text"
-					name="contactName"
-					pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-					title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-					value={contactName}
-					required
-				/>
-			</Label>
-
-			<Label>
-				Number
-				<Input
-					onChange={handleInputChange}
-					type="tel"
-					name="contactPhoneNumber"
-					pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-					title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-					value={contactPhoneNumber}
-					required
-				/>
-			</Label>
-			<Label>
-				Enter the name of the group to which you want to attach a contact:
-				<Input
-					onChange={handleInputChange}
-					type="text"
-					name="contactsGroup"
-					pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-					value={contactsGroup}
-				/>
-			</Label>
-			<Label>
-				or choose from the list:
-				<select
-					onChange={handleInputChange}
-					name="contactsGroupList"
-					defaultValue="---"
-					disabled={formValues.contactsGroup ? true : false}
-				>
-					{myGroups.map(group => (
-						<option key={group} value={group}>
-							{group}
-						</option>
-					))}
-				</select>
-			</Label>
+			<PositioningWrapperMain>
+				<Label>
+					Name:
+					<Input
+						onChange={handleInputChange}
+						type="text"
+						name="name"
+						pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+						title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+						value={name}
+						placeholder="Gregor ....."
+						required
+					/>
+				</Label>
+				<Label>
+					Phone number:
+					<Input
+						onChange={handleInputChange}
+						type="tel"
+						name="phoneNumber"
+						pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+						title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+						value={phoneNumber}
+						placeholder="+380 ....."
+						required
+					/>
+				</Label>
+				<Label>
+					Email:
+					<Input
+						onChange={handleInputChange}
+						type="email"
+						name="email"
+						value={email}
+						placeholder="some_body@....."
+					/>
+				</Label>
+			</PositioningWrapperMain>
+			<PositioningWrapperMain>
+				<Label>
+					Linkedin:
+					<Input
+						onChange={handleInputChange}
+						type="url"
+						name="linkedin"
+						value={linkedin}
+						placeholder="https://www.linkedin.com/in/....."
+					/>
+				</Label>
+				<Label>
+					Facebook:
+					<Input
+						onChange={handleInputChange}
+						type="url"
+						name="facebook"
+						value={facebook}
+						placeholder="https://www.facebook.com/....."
+					/>
+				</Label>
+				<Label>
+					Telegram:
+					<Input
+						onChange={handleInputChange}
+						type="url"
+						name="telegram"
+						value={telegram}
+						placeholder="https://t.me/....."
+					/>
+				</Label>
+			</PositioningWrapperMain>
+			<PositioningGruopWrapper>
+				<GroupLabel>
+					Enter new group name:
+					<GroupInput
+						onChange={handleInputChange}
+						type="text"
+						name="group"
+						value={group}
+						placeholder=""
+					/>
+				</GroupLabel>
+				<GroupSpan>or</GroupSpan>
+				<GroupLabel>
+					choose from the list:
+					<GroupSelect
+						onChange={handleInputChange}
+						name="contactsGroupList"
+						disabled={formValues.group && formValues.group !== '---' ? true : false}
+					>
+						{myGroups.map(group => (
+							<option key={group} value={group}>
+								{group}
+							</option>
+						))}
+					</GroupSelect>
+				</GroupLabel>
+			</PositioningGruopWrapper>
 			<SubmitBtn type="submit">
-				<TiUserAddOutline style={{ fontSize: 14 }} />
+				<TiUserAddOutline style={{ fontSize: 18 }} />
 				Add contact
 			</SubmitBtn>
 		</Form>
