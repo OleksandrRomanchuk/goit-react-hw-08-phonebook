@@ -26,6 +26,10 @@ const GroupPage = () => {
 
 	useEffect(() => {
 		dispatch(fetchContacts());
+
+		return () => {
+			dispatch(setGroupFilter('All'));
+		};
 	}, [dispatch]);
 
 	const onRadioBtnCheck = group => {
