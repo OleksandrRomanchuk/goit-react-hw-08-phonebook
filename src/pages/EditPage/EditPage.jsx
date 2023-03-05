@@ -1,9 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectContacts, selectGroups, selectFilter } from 'redux/selectors';
+import {
+	selectGroups,
+	selectFilter,
+	selectCurrentContact,
+} from 'redux/selectors';
 import { useParams, useNavigate } from 'react-router-dom';
 import { editContact } from 'redux/operations';
 import { socialLinksCheck } from 'helpers/socialLinksCheck';
+import { fetchContactById } from 'redux/operations';
 
 import {
 	EditForm,
@@ -19,20 +24,25 @@ import {
 } from 'components/ContactForm/ContactForm.styled';
 
 const EditPage = () => {
+	const currentContact = useSelector(selectCurrentContact);
 	const [formValues, setFormValues] = useState(null);
 	const { id: itemId } = useParams();
-	const { items } = useSelector(selectContacts);
 	const filter = useSelector(selectFilter);
 	const myGroups = useSelector(selectGroups);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const chosenContactInfo = items.find(({ id }) => id === itemId);
 
 	useEffect(() => {
-		const checkedContact = socialLinksCheck(chosenContactInfo);
+		const checkedContact = socialLinksCheck(currentContact);
 
 		setFormValues(checkedContact);
-	}, [chosenContactInfo]);
+	}, [currentContact]);
+
+	useEffect(() => {
+		dispatch(fetchContactById(itemId));
+	}, [dispatch, itemId]);
+
+	if (!currentContact) return;
 
 	const handleInputChange = ({ target: { name, value } }) => {
 		switch (name) {
