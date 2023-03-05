@@ -2,11 +2,15 @@ import { createSelector } from '@reduxjs/toolkit';
 
 const selectContacts = state => state.contacts;
 
+const selectCurrentContact = state => state.contacts.currentContact;
+
 const selectFilter = state => state.filter;
 
 const selectIsLoading = state => state.contacts.isLoading;
 
 const selectError = state => state.contacts.error;
+
+const selectGroupFilter = state => state.groupFilter;
 
 const selectFilteredContacts = state => {
 	const contacts = selectContacts(state);
@@ -32,9 +36,11 @@ const selectGroups = createSelector([selectContacts], ({ items }) => {
 
 export {
 	selectContacts,
+	selectCurrentContact,
 	selectFilter,
 	selectIsLoading,
 	selectError,
+	selectGroupFilter,
 	selectFilteredContacts,
 	selectGroups,
 };
