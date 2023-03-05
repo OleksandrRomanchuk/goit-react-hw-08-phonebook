@@ -27,7 +27,7 @@ const ContactsPage = () => {
 				{!areContacts && !isLoading && (
 					<Notification message="There are no contacts yet." />
 				)}
-				{areContacts && <ContactList />}
+				{areContacts && !error && <ContactList />}
 				{error && (
 					<Notification message="Something went wrong! Please reload the page or try again later." />
 				)}
