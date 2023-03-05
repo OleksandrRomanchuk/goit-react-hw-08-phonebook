@@ -16,6 +16,6 @@ const loadDataFromLocalSt = key => {
 	}
 };
 
-const localStorageFormValuesKey = 'FormValues';
+const localStorageFormValuesKey = 'formValues(hw-07)';
 
 export { saveDataToLocalSt, loadDataFromLocalSt, localStorageFormValuesKey };
