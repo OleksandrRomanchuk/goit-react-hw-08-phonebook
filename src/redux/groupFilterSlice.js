@@ -7,7 +7,6 @@ const groupFilterSlice = createSlice({
 	initialState: groupFilterInitialState,
 	reducers: {
 		setGroupFilter(_, action) {
-			console.log(action);
 			return action.payload;
 		},
 	},
