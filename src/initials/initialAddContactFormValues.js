@@ -3,5 +3,5 @@ export const initialAddContactFormValues = {
 	phoneNumber: '',
 	email: '',
 	socialLinks: { linkedin: '', facebook: '', telegram: '' },
-	group: '---',
+	group: '',
 };
