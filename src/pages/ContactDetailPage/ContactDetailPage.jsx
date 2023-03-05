@@ -1,8 +1,9 @@
 import SocialLinks from 'components/SocialLinks/SocialLinks';
-import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { selectContacts, selectFilter } from 'redux/selectors';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectCurrentContact } from 'redux/selectors';
 import { useParams } from 'react-router-dom';
+import { fetchContactById } from 'redux/operations';
 import { dateTransform } from 'helpers/dateTransform';
 
 import {
@@ -21,33 +22,30 @@ import {
 } from './ContactDetailPage.styled';
 
 const ContactsSubPage = () => {
-	const [contact, setContact] = useState(null);
+	const currentContact = useSelector(selectCurrentContact);
+	const dispatch = useDispatch();
 	const { id: itemId } = useParams();
-	const { items } = useSelector(selectContacts);
-	const filter = useSelector(selectFilter);
 
 	useEffect(() => {
-		const chosenContactInfo = items.find(({ id }) => id === itemId);
+		dispatch(fetchContactById(itemId));
+	}, [dispatch, itemId]);
 
-		setContact(chosenContactInfo);
-	}, [itemId, items]);
+	if (!currentContact) return;
 
-	if (!contact) return;
-
-	const links = Object.values(contact.socialLinks);
+	const links = Object.values(currentContact.socialLinks);
 	const areLinks = Boolean(links.some(link => link));
 
 	return (
 		<>
-			{contact && !filter && (
+			{currentContact && (
 				<DetailsWrapper>
 					<IntroWrapper>
-						<Avatar src={contact.avatar} alt={contact.name} />
+						<Avatar src={currentContact.avatar} alt={currentContact.name} />
 						<NamePositioning>
-							<Name>{contact.name}</Name>
+							<Name>{currentContact.name}</Name>
 							<Date>
 								<DetailsSpan>In my contacts since: </DetailsSpan>
-								{dateTransform(contact.createdAt)}
+								{dateTransform(currentContact.createdAt)}
 							</Date>
 						</NamePositioning>
 					</IntroWrapper>
@@ -55,20 +53,20 @@ const ContactsSubPage = () => {
 						<PhonePositioning>
 							<p>
 								<DetailsSpan>Phone number: </DetailsSpan>
-								{contact.phoneNumber}
+								{currentContact.phoneNumber}
 							</p>
-							{contact.email && (
+							{currentContact.email && (
 								<Details>
 									<DetailsSpan>Email: </DetailsSpan>
-									{contact.email}
+									{currentContact.email}
 								</Details>
 							)}
 
 							<Details>
 								<GroupsSpan>
-									{contact.group === '---'
+									{currentContact.group === '---'
 										? 'This contact is not tied to any of the groups.'
-										: `In "${contact.group}" group.`}
+										: `In "${currentContact.group}" group.`}
 								</GroupsSpan>
 							</Details>
 						</PhonePositioning>
