@@ -1,9 +1,15 @@
 import Loader from 'components/Loader/Loader';
-import { useSelector } from 'react-redux';
-import { selectGroups, selectIsLoading } from 'redux/selectors';
-import { Suspense } from 'react';
-import { Outlet } from 'react-router-dom';
-import { pathNameNormalize } from 'helpers/pathNameNormalize';
+import GroupContactList from 'components/GroupContactList/GroupContactList';
+import Notification from 'components/Notification/Notification';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+	selectContacts,
+	selectGroups,
+	selectGroupFilter,
+} from 'redux/selectors';
+import { setGroupFilter } from 'redux/groupFilterSlice';
+import { fetchContacts } from 'redux/operations';
 
 import {
 	LeftContainer,
@@ -11,20 +17,28 @@ import {
 } from 'pages/ContactsPage/ContactsPage.styled';
 import { List, Item, ItemName } from './GroupsPage.styled';
 
-const ContactsGroupPage = () => {
+const GroupPage = () => {
+	const { items, isLoading, error } = useSelector(selectContacts);
+	const areContacts = Boolean(items.length);
+	const groupFilter = useSelector(selectGroupFilter);
+	const dispatch = useDispatch();
 	const myGroups = useSelector(selectGroups);
-	const isLoading = useSelector(selectIsLoading);
+
+	useEffect(() => {
+		dispatch(fetchContacts());
+	}, [dispatch]);
+
+	const onRadioBtnCheck = group => {
+		dispatch(setGroupFilter(group));
+	};
 
 	const elements = myGroups.map(groupName => {
-		const normalizedGroupName = pathNameNormalize(groupName);
 		return (
 			<Item key={groupName}>
 				<ItemName
-					to={
-						normalizedGroupName === '---'
-							? 'contacts-without-group'
-							: normalizedGroupName
-					}
+					onClick={() => onRadioBtnCheck(groupName)}
+					type="button"
+					selected={groupFilter === groupName}
 				>
 					{groupName === '---' ? 'Contacts without group' : groupName}
 				</ItemName>
@@ -34,17 +48,22 @@ const ContactsGroupPage = () => {
 
 	return (
 		<>
-			<LeftContainer>
-				<List>{elements}</List>
-			</LeftContainer>
-			<RigthContainer>
-				{isLoading && <Loader />}
-				<Suspense>
-					<Outlet />
-				</Suspense>
-			</RigthContainer>
+			{!areContacts && !isLoading && (
+				<Notification message="There are no contacts yet." />
+			)}
+			{areContacts && !error && (
+				<>
+					<LeftContainer>
+						<List>{elements}</List>
+					</LeftContainer>
+					<RigthContainer>
+						{isLoading && <Loader />}
+						<GroupContactList />
+					</RigthContainer>
+				</>
+			)}
 		</>
 	);
 };
 
-export default ContactsGroupPage;
+export default GroupPage;

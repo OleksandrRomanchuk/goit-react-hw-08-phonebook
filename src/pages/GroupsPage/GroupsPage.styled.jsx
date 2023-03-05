@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
 
 export const List = styled.ul`
 	display: flex;
@@ -42,19 +41,19 @@ export const Item = styled.li`
 	}
 `;
 
-export const ItemName = styled(NavLink)`
-	position: relative;
-
+export const ItemName = styled.button`
+	font-family: inherit;
 	font-size: 16px;
+	color: ${({ selected }) => (selected ? 'rgba(42, 153, 159, 1)' : 'inherit')};
+
+	background: none;
+	border: none;
+	outline: none;
 
 	transition: color 300ms ease-in-out;
 
 	:hover,
 	:focus {
 		color: rgba(241, 178, 17, 1);
-	}
-
-	&.active {
-		color: rgba(42, 153, 159, 1);
 	}
 `;
