@@ -1,19 +1,7 @@
-import PropTypes from 'prop-types';
+import BtnsList from 'components/BtnsList/BtnsList';
 import Loader from 'components/Loader/Loader';
-import { useSelector, useDispatch } from 'react-redux';
-import { selectContacts } from 'redux/selectors';
-import { deleteContact } from 'redux/operations';
-import { useLocation } from 'react-router-dom';
-import { TiUserDeleteOutline } from 'react-icons/ti';
-import { CgDetailsMore } from 'react-icons/cg';
-import { BiEditAlt } from 'react-icons/bi';
-
-import {
-	BtnList,
-	EditBtn,
-	DetailBtn,
-	DeleteBtn,
-} from 'components/ContactList/ContactItem/ContactItem.styled';
+import { useSelector } from 'react-redux';
+import { selectContacts, selectGroupFilter } from 'redux/selectors';
 import {
 	List,
 	Item,
@@ -24,15 +12,14 @@ import {
 	PhoneNumber,
 } from './GroupContactList.styled';
 
-const GroupContactList = ({ group }) => {
+const GroupContactList = () => {
+	const groupFilter = useSelector(selectGroupFilter);
 	const { items, isLoading } = useSelector(selectContacts);
-	const dispatch = useDispatch();
-	const location = useLocation();
 	const filteredContactsByGroup =
-		group === 'All'
+		groupFilter === 'All'
 			? items
 			: items.filter(contact => {
-					if (contact.group !== group) {
+					if (contact.group !== groupFilter) {
 						return false;
 					}
 
@@ -51,35 +38,7 @@ const GroupContactList = ({ group }) => {
 						</div>
 
 						<div>
-							<BtnList>
-								<li>
-									<DetailBtn
-										to={`/my-contacts/${id}/details`}
-										state={{ from: location }}
-										title="Show more details"
-									>
-										<CgDetailsMore />
-									</DetailBtn>
-								</li>
-								<li>
-									<EditBtn
-										to={`/my-contacts/edit/${id}`}
-										state={{ from: location }}
-										title="Edit contact"
-									>
-										<BiEditAlt />
-									</EditBtn>
-								</li>
-								<li>
-									<DeleteBtn
-										type="button"
-										onClick={() => dispatch(deleteContact(id))}
-										title="Delete contact"
-									>
-										<TiUserDeleteOutline />
-									</DeleteBtn>
-								</li>
-							</BtnList>
+							<BtnsList id={id} />
 						</div>
 					</NameWrapper>
 				</IntroWrapper>
@@ -93,10 +52,6 @@ const GroupContactList = ({ group }) => {
 			<List>{elements}</List>
 		</>
 	);
-};
-
-GroupContactList.propTypes = {
-	group: PropTypes.string.isRequired,
 };
 
 export default GroupContactList;
