@@ -50,6 +50,8 @@ export const ItemName = styled.button`
 	border: none;
 	outline: none;
 
+	cursor: pointer;
+
 	transition: color 300ms ease-in-out;
 
 	:hover,
