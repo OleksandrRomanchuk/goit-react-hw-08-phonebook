@@ -27,7 +27,7 @@ const BtnsList = ({ id }) => {
 		<BtnList>
 			<li>
 				<DetailBtn
-					to={isOnGroupsPage ? `/my-contacts/${id}/details` : id}
+					to={isOnGroupsPage ? `/${id}/details` : id}
 					state={{ from: location }}
 					title="Show more details"
 				>
