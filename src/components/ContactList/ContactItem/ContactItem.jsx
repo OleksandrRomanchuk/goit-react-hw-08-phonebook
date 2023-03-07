@@ -2,12 +2,12 @@ import PropTypes from 'prop-types';
 import BtnsList from 'components/BtnsList/BtnsList';
 import { ContactWrapper, ContactName, PhoneNumber } from './ContactItem.styled';
 
-const ContactItem = ({ contact: { name, phoneNumber, id } }) => {
+const ContactItem = ({ contact: { name, number, id } }) => {
 	return (
 		<>
 			<ContactWrapper>
 				<ContactName>{name}</ContactName>
-				<PhoneNumber>{phoneNumber}</PhoneNumber>
+				<PhoneNumber>{number}</PhoneNumber>
 			</ContactWrapper>
 			<ContactWrapper>
 				<BtnsList id={id} />
@@ -19,7 +19,7 @@ const ContactItem = ({ contact: { name, phoneNumber, id } }) => {
 ContactItem.propTypes = {
 	contact: PropTypes.shape({
 		name: PropTypes.string.isRequired,
-		phoneNumber: PropTypes.string.isRequired,
+		number: PropTypes.string.isRequired,
 		id: PropTypes.string.isRequired,
 	}),
 };
