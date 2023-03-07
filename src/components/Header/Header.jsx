@@ -11,7 +11,7 @@ const Header = () => {
 	return (
 		<NavBar>
 			<Container layout="flex">
-				<Logo to="/my-contacts">Phonebook</Logo>
+				<Logo to="/">Phonebook</Logo>
 				{!onGroupsPage && <Filter />}
 
 				<AppNavigation />
