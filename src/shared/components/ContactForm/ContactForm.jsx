@@ -1,14 +1,14 @@
 import PropTypes from 'prop-types';
-import { initialAddContactFormValues } from 'initials/initialAddContactFormValues';
+import { initialAddContactFormValues } from './initialAddContactFormValues';
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { addContact } from 'redux/operations';
+import { addContact } from 'redux/contacts/contactsOperations';
 import { TiUserAddOutline } from 'react-icons/ti';
 import {
 	loadDataFromLocalSt,
 	saveDataToLocalSt,
 	localStorageFormValuesKey,
-} from 'helpers/localStfunc';
+} from 'shared/helpers/localStfunc';
 
 import {
 	Form,

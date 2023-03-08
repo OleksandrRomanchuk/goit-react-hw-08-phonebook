@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectFilter, selectCurrentContact } from 'redux/selectors';
+import { selectCurrentContact } from 'redux/contacts/contactSelectors';
+import { selectFilter } from 'redux/filter/filterSelectors';
 import { useParams, useNavigate } from 'react-router-dom';
-import { editContact } from 'redux/operations';
-import { fetchContactById } from 'redux/operations';
+import { editContact } from 'redux/contacts/contactsOperations';
+import { fetchContactById } from 'redux/contacts/contactsOperations';
 
 import {
 	EditForm,
@@ -11,7 +12,7 @@ import {
 	Label,
 	Input,
 	SubmitBtn,
-} from 'components/ContactForm/ContactForm.styled';
+} from 'shared/components/ContactForm/ContactForm.styled';
 
 const EditPage = () => {
 	const currentContact = useSelector(selectCurrentContact);

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import Container from 'components/Container/Container';
+import Container from '../Container/Container';
 import { AppSection, AddButton } from './Section.styled';
 
 const Section = ({ toggleModal, children }) => {

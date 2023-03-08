@@ -1,8 +1,8 @@
-import Header from 'components/Header/Header';
-import Section from 'components/Section/Section';
-import Footer from 'components/Footer/Footer';
-import ContactForm from 'components/ContactForm/ContactForm';
-import Modal from 'components/Modal/Modal';
+import Header from '../Header/Header';
+import Section from '../Section/Section';
+import Footer from '../Footer/Footer';
+import ContactForm from '../ContactForm/ContactForm';
+import Modal from '../Modal/Modal';
 import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useState } from 'react';

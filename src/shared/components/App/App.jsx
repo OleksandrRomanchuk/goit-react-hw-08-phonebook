@@ -1,7 +1,7 @@
 import { lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-import SharedLayout from 'components/SharedLayout/SharedLayout';
+import SharedLayout from '../SharedLayout/SharedLayout';
 const ContactsPage = lazy(() => import('pages/ContactsPage/ContactsPage'));
 const ContactDetailPage = lazy(() =>
 	import('pages/ContactDetailPage/ContactDetailPage')

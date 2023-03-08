@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { selectCurrentContact } from 'redux/selectors';
-import { deleteContact } from 'redux/operations';
+import { selectCurrentContact } from 'redux/contacts/contactSelectors';
+import { deleteContact } from 'redux/contacts/contactsOperations';
 import { TiUserDeleteOutline } from 'react-icons/ti';
 import { CgDetailsMore } from 'react-icons/cg';
 import { BiEditAlt } from 'react-icons/bi';

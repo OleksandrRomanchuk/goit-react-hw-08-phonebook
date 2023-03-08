@@ -1,6 +1,6 @@
-import Container from 'components/Container/Container';
-import Filter from 'components/Filter/Filter';
-import AppNavigation from 'components/AppNavigation/AppNavigation';
+import Container from '../Container/Container';
+import Filter from '../Filter/Filter';
+import AppNavigation from '../AppNavigation/AppNavigation';
 import { useLocation } from 'react-router-dom';
 import { NavBar, Logo } from './Header.styled';
 
