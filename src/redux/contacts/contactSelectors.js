@@ -1,8 +1,8 @@
+import { selectFilter } from 'redux/filter/filterSelectors';
+
 const selectContacts = state => state.contacts;
 
 const selectCurrentContact = state => state.contacts.currentContact;
-
-const selectFilter = state => state.filter;
 
 const selectIsLoading = state => state.contacts.isLoading;
 
@@ -22,7 +22,6 @@ const selectFilteredContacts = state => {
 export {
 	selectContacts,
 	selectCurrentContact,
-	selectFilter,
 	selectIsLoading,
 	selectError,
 	selectFilteredContacts,
