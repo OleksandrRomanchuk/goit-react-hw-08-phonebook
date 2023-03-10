@@ -4,9 +4,9 @@ import { selectUserName } from 'redux/auth/selectors';
 import { authLogout } from 'redux/auth/operation';
 import { resetContactsState } from 'redux/contacts/actions';
 
-import { InfoWrapper, UserName } from './LoggedInUserInfo.styled';
+import { InfoWrapper, UserName } from './UserMenu.styled';
 
-const LoggedInUserInfo = () => {
+const UserMenu = () => {
 	const dispatch = useDispatch();
 	const userName = useSelector(selectUserName);
 
@@ -29,4 +29,4 @@ const LoggedInUserInfo = () => {
 	);
 };
 
-export default LoggedInUserInfo;
+export default UserMenu;

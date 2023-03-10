@@ -1,11 +1,11 @@
 import Logo from 'shared/components/Logo/Logo';
-import AppNavigation from 'shared/components/AppNavigation/AppNavigation';
+import Navigation from 'shared/components/Navigation/Navigation';
 
 const LoggedOutNavBar = () => {
 	return (
 		<>
 			<Logo />
-			<AppNavigation />
+			<Navigation />
 		</>
 	);
 };

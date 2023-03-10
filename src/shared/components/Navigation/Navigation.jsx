@@ -1,6 +1,6 @@
-import { AppNav, List, PageLink } from './AppNavigation.styled';
+import { AppNav, List, PageLink } from './Navigation.styled';
 
-const AppNavigation = () => {
+const Navigation = () => {
 	return (
 		<AppNav>
 			<List>
@@ -15,4 +15,4 @@ const AppNavigation = () => {
 	);
 };
 
-export default AppNavigation;
+export default Navigation;

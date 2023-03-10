@@ -1,13 +1,13 @@
 import Logo from 'shared/components/Logo/Logo';
 import Filter from '../../shared/components/Filter/Filter';
-import LoggedInUserInfo from 'shared/components/LoggedInUserInfo/LoggedInUserInfo';
+import UserMenu from 'shared/components/UserMenu/UserMenu';
 
 const LoggedInNavBar = () => {
 	return (
 		<>
 			<Logo />
 			<Filter />
-			<LoggedInUserInfo />
+			<UserMenu />
 		</>
 	);
 };
