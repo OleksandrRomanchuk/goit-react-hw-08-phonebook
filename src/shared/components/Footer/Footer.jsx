@@ -5,7 +5,6 @@ import {
 	Text,
 	Link,
 	SubLink,
-	HelpersList,
 	ListItem,
 } from './Footer.styled';
 
@@ -34,14 +33,14 @@ const Footer = () => {
 				</Wrapper>
 				<Wrapper>
 					<Text>Thanks for the help best:</Text>
-					<HelpersList>
+					<ul>
 						<ListItem>
 							<p>blended-group-2, GoIt FSON 62;</p>
 						</ListItem>
 						<ListItem>
 							<p>Mentor.</p>
 						</ListItem>
-					</HelpersList>
+					</ul>
 				</Wrapper>
 			</Container>
 		</FooterSection>

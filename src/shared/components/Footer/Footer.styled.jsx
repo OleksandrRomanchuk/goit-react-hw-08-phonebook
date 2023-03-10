@@ -41,8 +41,6 @@ export const SubLink = styled(Link)`
 	color: #ffffffa4;
 `;
 
-export const HelpersList = styled.ul``;
-
 export const ListItem = styled.li`
 	position: relative;
 
