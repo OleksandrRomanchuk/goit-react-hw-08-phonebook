@@ -16,6 +16,17 @@ const loadDataFromLocalSt = key => {
 	}
 };
 
-const localStorageFormValuesKey = 'formValues(hw-08)';
+// LSK = LocalStorageKey
+const newContactLSK = 'newContactformValues(hw-08)';
+const registerFormLSK = 'registerFormValues(hw-08)';
+const loginFormLSK = 'loginFormValues(hw-08)';
+const editFormLSK = 'editFormValues(hw-08)';
 
-export { saveDataToLocalSt, loadDataFromLocalSt, localStorageFormValuesKey };
+export {
+	saveDataToLocalSt,
+	loadDataFromLocalSt,
+	newContactLSK,
+	registerFormLSK,
+	loginFormLSK,
+	editFormLSK,
+};
