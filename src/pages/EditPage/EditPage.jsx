@@ -3,7 +3,6 @@ import Button from 'shared/components/Button/Button';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectCurrentContact } from 'redux/contacts/selectors';
-import { selectFilter } from 'redux/filter/selectors';
 import { useNavigate } from 'react-router-dom';
 import { editContact } from 'redux/contacts/operations';
 import { fields } from './fields';
