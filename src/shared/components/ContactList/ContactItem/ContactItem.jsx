@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import BtnsList from 'shared/components/BtnsList/BtnsList';
+
 import { ContactWrapper, ContactName, PhoneNumber } from './ContactItem.styled';
 
 const ContactItem = ({ contact: { name, number, id } }) => {
