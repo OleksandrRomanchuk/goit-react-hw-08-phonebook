@@ -16,7 +16,6 @@ import {
 const EditPage = () => {
 	const currentContact = useSelector(selectCurrentContact);
 	const [formValues, setFormValues] = useState(null);
-	const filter = useSelector(selectFilter);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
