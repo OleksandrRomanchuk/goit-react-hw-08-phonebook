@@ -13,7 +13,3 @@ export const Main = styled.main`
 	padding-top: 15px;
 	padding-bottom: 15px;
 `;
-
-export const HomePageMain = styled(Main)`
-	padding-top: 60px;
-`;
