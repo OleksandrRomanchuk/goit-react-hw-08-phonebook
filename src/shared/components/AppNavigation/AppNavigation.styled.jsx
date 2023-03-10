@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
 export const AppNav = styled.nav`
-	${({ ongroupsPage }) => ongroupsPage && 'margin-left: 434px'}
+	${({ isLoggenIn }) => isLoggenIn && 'margin-left: 434px'}
 `;
 
 export const List = styled.ul`
