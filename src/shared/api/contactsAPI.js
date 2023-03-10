@@ -1,53 +1,23 @@
-import axios from 'axios';
-
-const contactsAxiosDefaults = axios.create({
-	baseURL: 'https://63fc83688ef914c55599030a.mockapi.io/api/contacts',
-});
+import { contactsAxiosDefaults } from './APIDefaults';
 
 const getAllContacts = () => {
-	return contactsAxiosDefaults.get('/');
-};
-
-const getContactById = id => {
-	return contactsAxiosDefaults.get(`/${id}`);
+	return contactsAxiosDefaults.get('/contacts');
 };
 
 const postNewContact = contact => {
-	return contactsAxiosDefaults.post('/', contact);
+	return contactsAxiosDefaults.post('/contacts', contact);
 };
 
 const removeContact = id => {
-	return contactsAxiosDefaults.delete(`/${id}`);
+	return contactsAxiosDefaults.delete(`/contacts/${id}`);
 };
 
 const putContact = contact => {
-	return contactsAxiosDefaults.put(`/${contact.id}`, contact);
+	const valuesToUpdate = {
+		name: contact.name,
+		number: contact.number,
+	};
+	return contactsAxiosDefaults.patch(`/contacts/${contact.id}`, valuesToUpdate);
 };
 
-const signUp = contact => {
-	return contactsAxiosDefaults.post('/users/signup', contact);
-};
-
-const logIn = contact => {
-	return contactsAxiosDefaults.post('/users/login', contact);
-};
-
-const logOut = () => {
-	return contactsAxiosDefaults.post('/users/logout');
-};
-
-const refreshUser = () => {
-	return contactsAxiosDefaults.get('/users/current');
-};
-
-export {
-	getAllContacts,
-	getContactById,
-	postNewContact,
-	removeContact,
-	putContact,
-	signUp,
-	logIn,
-	logOut,
-	refreshUser,
-};
+export { getAllContacts, postNewContact, removeContact, putContact };
