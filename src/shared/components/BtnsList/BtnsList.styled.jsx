@@ -38,7 +38,7 @@ export const DeleteBtn = styled.button`
 	}
 `;
 
-export const DetailBtn = styled(Link)`
+export const EditBtn = styled(Link)`
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -57,21 +57,14 @@ export const DetailBtn = styled(Link)`
 	opacity: 0.4;
 
 	transition: opacity 300ms ease, background-color 300ms ease, color 300ms ease,
-		box-shadow 300ms ease;
+		box-shadow 300ms ease, color 300ms ease;
 
 	:hover,
 	:focus {
 		color: #ffffff;
 
 		opacity: 1;
-		background-color: rgba(24, 107, 184, 1);
-		box-shadow: 0px 0px 5px 2px rgba(24, 107, 184, 1);
-	}
-`;
 
-export const EditBtn = styled(DetailBtn)`
-	:hover,
-	:focus {
 		background-color: rgba(241, 178, 17, 1);
 		box-shadow: 0px 0px 5px 2px rgba(241, 178, 17, 1);
 	}

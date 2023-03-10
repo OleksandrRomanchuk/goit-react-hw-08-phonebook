@@ -1,20 +1,19 @@
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { selectCurrentContact } from 'redux/contacts/contactSelectors';
-import { deleteContact } from 'redux/contacts/contactsOperations';
+import { useNavigate } from 'react-router-dom';
+import { selectCurrentContact, selectContacts } from 'redux/contacts/selectors';
+import { setCurrentContact } from 'redux/contacts/actions';
+import { deleteContact } from 'redux/contacts/operations';
 import { TiUserDeleteOutline } from 'react-icons/ti';
-import { CgDetailsMore } from 'react-icons/cg';
 import { BiEditAlt } from 'react-icons/bi';
 
-import { BtnList, DeleteBtn, DetailBtn, EditBtn } from './BtnsList.styled';
+import { BtnList, DeleteBtn, EditBtn } from './BtnsList.styled';
 
 const BtnsList = ({ id }) => {
+	const { items } = useSelector(selectContacts);
 	const contact = useSelector(selectCurrentContact);
 	const dispatch = useDispatch();
-	const location = useLocation();
 	const navigate = useNavigate();
-	const isOnGroupsPage = Boolean(location.pathname.includes('my-groups'));
 
 	const deleteBtnClickHandler = id => {
 		dispatch(deleteContact(id));
@@ -23,21 +22,18 @@ const BtnsList = ({ id }) => {
 		}
 	};
 
+	const editBtnClickHandler = id => {
+		const currentContact = items.filter(item => item.id === id);
+
+		dispatch(setCurrentContact(currentContact[0]));
+	};
+
 	return (
 		<BtnList>
 			<li>
-				<DetailBtn
-					to={isOnGroupsPage ? `/${id}/details` : id}
-					state={{ from: location }}
-					title="Show more details"
-				>
-					<CgDetailsMore />
-				</DetailBtn>
-			</li>
-			<li>
 				<EditBtn
 					to={`/my-contacts/edit/${id}`}
-					state={{ from: location }}
+					onClick={() => editBtnClickHandler(id)}
 					title="Edit contact"
 				>
 					<BiEditAlt />
